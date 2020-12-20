@@ -1,26 +1,25 @@
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Infinite scroll | JavaScript Web Projects | Hoang Kim Troi</title>
+    <title>Picture in Picture | JavaScript Web Projects | Hoang Kim Troi</title>
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <div class="container">
-        <!-- Title -->
-        <h1>Infinite scroll</h1>
-        <!-- Loader -->
-        <div class="loader" id="loader">
-            <img src="loader.svg" alt="">
-        </div>
-        <!-- Image container -->
-        <div id="image-container" class="image-container"></div>
-        <!-- Script -->
-        <script src="script.js"></script>
+    <!-- Video -->
+    <video id="video" controls height="360" width="640" hidden></video>
+    <!-- Button -->
+    <div class="button-container">
+        <button id="button">START</button>
     </div>
+    <!-- Script -->
+    <script src="script.js"></script>
 </body>
 </html>

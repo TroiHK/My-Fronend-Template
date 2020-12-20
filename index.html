@@ -31,51 +31,45 @@
                 font-size: 60px;
             }
         }
+
+        /* loader */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        #loader[hidden] {
+            display: none;
+        }
+
+        #loader img {
+            max-width: 100px;
+        }
     </style>
 </head>
 
 <body>
     <div class="container pb-4">
         <h1 class="mt-5 mb-4 text-center">List Frontend Template</h1>
-        
-        <div class="row">
-            <div class="col-12 col-md-6 col-lg-4 mt-3">
-                <div class="card h-100">
-                    <figure class="card-img-top border-bottom">
-                        <a href="quote-generator/index.html">
-                            <img class="img-fluid w-100" src="quote-generator/screenshot.png" alt="Card image cap">
-                        </a>
-                    </figure>
-                    <div class="card-body">
-                        <h5 class="card-title">Quote Generator</h5>
-                        <p class="card-text">Fetch, Async/Await, Quote API, CORS</p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Posted on Nov 10, 2020</small>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-md-6 col-lg-4 mt-3">
-                <div class="card h-100">
-                    <figure class="card-img-top border-bottom">
-                        <a href="infinite-scroll/index.html">
-                            <img class="img-fluid w-100" src="infinite-scroll/screenshot.png" alt="Card image cap">
-                        </a>
-                    </figure>
-                    <div class="card-body">
-                        <h5 class="card-title">Infinite Scroll</h5>
-                        <p class="card-text">Fetch, Async/Await, Unsplash API, DOM, Scroll Event Listener</p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Posted on Nov 20, 2020</small>
-                    </div>
-                </div>
-            </div>
+        <!-- Loader -->
+        <div class="loader" id="loader">
+            <img src="loader.svg" alt="">
         </div>
-
+        <!-- List Projects -->
+        <div class="row" id="list-projects"></div>
+        <!-- Copyright -->
         <p class="pt-5 text-center">Copyright © 2020 HKT, All Rights Reserved</p>
     </div>
+    <!-- Script -->
+    <script src="data.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
