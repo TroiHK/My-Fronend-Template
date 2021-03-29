@@ -1,5 +1,11 @@
 const listProjects = [
     {
+        title: 'Todo List',
+        slug: 'todo-list',
+        description: 'DOM, localStorage',
+        date: 'Posted on March 29, 2021'
+    },
+    {
         title: 'Picture in Picture',
         slug: 'picture-in-picture',
         description: 'Picture-in-Picture API, Screen Capture API',

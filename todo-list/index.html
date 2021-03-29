@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List | JavaScript Web Projects | Hoang Kim Troi</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <!-- Style -->
+    <style>
+        /* Reset padding, margin, box-sizing */
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        /* Layout */
+        body {
+            min-width: 320px;
+        }
+
+        .container {
+            max-width: 790px;
+            padding: 0 15px;
+            margin: 0 auto;
+        }
+
+        #todo-list {
+            padding: 50px 0;
+        }
+
+        /* Style the list items */
+        ul li {
+            cursor: pointer;
+            position: relative;
+            padding: 12px 8px 12px 40px;
+            list-style-type: none;
+            background: #eee;
+            font-size: 18px;
+            transition: 0.2s;
+
+            /* make the list items unselectable */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Set all odd list items to a different color (zebra-stripes) */
+        ul li:nth-child(odd) {
+            background: #f9f9f9;
+        }
+
+        /* Darker background-color on hover */
+        ul li:hover {
+            background: #ddd;
+        }
+
+        /* When clicked on, add a background color and strike out text */
+        ul li.checked {
+            background: #888;
+            color: #fff;
+            text-decoration: line-through;
+        }
+
+        /* Add a "checked" mark when clicked on */
+        ul li.checked::before {
+            content: '';
+            position: absolute;
+            border-color: #fff;
+            border-style: solid;
+            border-width: 0 2px 2px 0;
+            top: 10px;
+            left: 16px;
+            transform: rotate(45deg);
+            height: 15px;
+            width: 7px;
+            z-index: 1;
+        }
+
+        ul li::after {
+            content: '';
+            position: absolute;
+            border: 2px solid #f7941d;
+            top: 50%;
+            left: 10px;
+            margin-top: -8px;
+            height: 12px;
+            width: 12px;
+        }
+
+        /* Style the close button */
+        .close {
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding: 12px 16px 12px 16px;
+            transition: 0.3s;
+        }
+
+        .close:hover {
+            background-color: #f44336;
+            color: #fff;
+        }
+
+        /* Style the header */
+        #myDiv {
+            background-color: #f7941d;
+            padding: 30px 40px;
+            color: #fff;
+            text-align: center;
+        }
+
+        /* Clear floats after the header */
+        #myDiv:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Heading */
+        #myDiv h2 {
+            margin-bottom: 15px;
+        }
+
+        /* Style the input */
+        input {
+            margin: 0;
+            border: none;
+            border-radius: 0;
+            width: 75%;
+            padding: 10px;
+            float: left;
+            font-size: 16px;
+        }
+
+        /* Style the "Add" button */
+        .addBtn {
+            padding: 10px;
+            width: 25%;
+            background: #3f51b5;
+            color: #fff;
+            float: left;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            border-radius: 0;
+        }
+
+        .addBtn:hover {
+            background-color: #bbb;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="todo-list"></div>
+    </div>
+
+    <!-- Script -->
+    <script type="text/javascript">
+        // Variables
+        var toDoList = document.getElementById('todo-list');
+        var getLocalStorageData = localStorage.getItem("Todo List");
+        var items = getLocalStorageData ? JSON.parse(getLocalStorageData) : [];
+
+        // Create ul
+        var ul = document.createElement("ul");
+        ul.id = 'myUL';
+        toDoList.appendChild(ul);
+
+        // Create a "close" button and append it items
+        function addCloseButton(element) {
+            var span = document.createElement("span");
+            var txt = document.createTextNode("\u00D7");
+            span.className = "close";
+            span.appendChild(txt);
+            clickCloseButton(span); // add event click
+            element.appendChild(span);
+        }
+
+        // Click on a close button to hide the current item
+        var close = document.getElementsByClassName("close");
+        function clickCloseButton(element) {
+            element.onclick = function () {
+                var div = this.parentElement;
+                div.style.display = "none";
+            }
+        }
+
+        // Add a "checked" symbol when clicking on a list item
+        var list = document.querySelector('ul');
+        list.addEventListener('click', function (ev) {
+            // add checked class when click li tab
+            if (ev.target.tagName === 'LI') {
+                // Set item class
+                var index = items.findIndex(function (item) {
+                    return item.index === ev.target.getAttribute('data-index') * 1;
+                });
+                if (ev.target.classList.contains('checked')) {
+                    items[index].class = '';
+                } else {
+                    items[index].class = 'checked';
+                }
+
+                // Update localStorage
+                localStorage.setItem("Todo List", JSON.stringify(items));
+
+                // add class checked to li
+                ev.target.classList.toggle('checked');
+            }
+
+            // remove localStorage item 
+            if (ev.target.tagName === 'SPAN') {
+                // var index = items.findIndex(item => item.index === ev.target.parentElement.getAttribute('data-index')*1);
+                var index = items.findIndex(function (item) {
+                    return item.index === ev.target.parentElement.getAttribute('data-index') * 1;
+                });
+
+                // Remove item by index
+                items.splice(index, 1);
+
+                // Update localStorage
+                localStorage.setItem("Todo List", JSON.stringify(items));
+            }
+        }, false);
+
+        // click add button function
+        function clickAddButton() {
+            var indexLi = items.length ? items[items.length - 1].index + 1 : 0;
+            var inputValue = document.getElementById("myInput").value;
+            items.push({
+                index: indexLi,
+                value: inputValue,
+                class: ''
+            }); //pushing or adding new value in array
+            localStorage.setItem("Todo List", JSON.stringify(items)); //transforming js object into a json string
+
+            // Add new item html
+            newElement();
+
+            // Set data index to li
+            var listLi = document.querySelectorAll('li');
+            listLi[listLi.length - 1].setAttribute('data-index', indexLi);
+        }
+
+        // Show Todo List function
+        function showTodoList() {
+            items.forEach(function (element, index) {
+                var li = document.createElement("li");
+                li.setAttribute('data-index', element.index);
+                li.className = element.class;
+                var text = document.createTextNode(element.value);
+                li.appendChild(text);
+                addCloseButton(li);
+                document.getElementById("myUL").appendChild(li);
+            });
+        }
+
+        // Create a new list item when clicking on the "Add" button
+        function newElement() { var e = document.createElement("li"), t = document.getElementById("myInput").value, n = document.createTextNode(t); e.appendChild(n); s = document.getElementsByClassName("closed"); "" == t ? alert("You must write something!") : document.getElementById("myUL").appendChild(e), document.getElementById("myInput").value = ""; var l = document.createElement("SPAN"), m = document.createTextNode("×"); for (l.className = "close", l.appendChild(m), e.appendChild(l), i = 0; i < close.length; i++)close[i].onclick = function () { this.parentElement.style.display = "none" }; setTimeout(function () { 0 <= this.items.indexOf(t) && alert("You haven't done the task '" + t + "'!") }, 6e4) }
+
+        // Create heading
+        var div = document.createElement("div");
+        div.className = "header";
+        div.id = "myDiv";
+
+        var h2 = document.createElement("h2");
+        h2.innerText = "Todo List";
+        div.appendChild(h2);
+
+        var input = document.createElement("input");
+        input.type = "text";
+        input.id = "myInput";
+        // Execute a function when the user releases a key on the keyboard
+        input.addEventListener("keyup", function (event) {
+            // Number 13 is the "Enter" key on the keyboard
+            if (event.keyCode === 13) {
+                // Cancel the default action, if needed
+                event.preventDefault();
+                // Trigger the button element with a click
+                document.querySelector(".addBtn").click();
+            }
+        });
+        div.appendChild(input);
+
+        var span2 = document.createElement("span");
+        span2.onclick = clickAddButton;
+        span2.className = "addBtn";
+        span2.innerText = "Add";
+        div.appendChild(span2);
+
+        // Add heading above Todo List
+        // toDoList.prepend(div);
+        toDoList.insertBefore(div, toDoList.childNodes[0]);
+
+        // Show Todo list - On load
+        showTodoList();
+
+    </script>
+</body>
+
+</html>
