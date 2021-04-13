@@ -1,0 +1,15 @@
+body {
+    margin: 0;
+    background: whitesmoke;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 15px;
+}

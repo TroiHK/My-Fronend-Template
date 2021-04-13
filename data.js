@@ -1,5 +1,11 @@
 const listProjects = [
     {
+        title: 'Face API',
+        slug: 'face-api',
+        description: 'Face API, Async/Await',
+        date: 'Posted on April 13, 2021'
+    },
+    {
         title: 'Todo List',
         slug: 'todo-list',
         description: 'DOM, localStorage',
