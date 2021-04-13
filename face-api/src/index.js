@@ -10,6 +10,7 @@ const loadFaceAPI = async () => {
     await faceapi.nets.faceRecognitionNet.loadFromUri('./models')
     await faceapi.nets.tinyFaceDetector.loadFromUri('./models')
     await faceapi.nets.faceExpressionNet.loadFromUri('./models')
+    await faceapi.nets.ageGenderNet.loadFromUri('./models')
 }
 
 // Create camera function
@@ -44,7 +45,13 @@ video.addEventListener('playing', () => {
         faceapi.draw.drawDetections(canvas, resizedDetects)
         faceapi.draw.drawFaceLandmarks(canvas, resizedDetects)
         faceapi.draw.drawFaceExpressions(canvas, resizedDetects)
-    }, 300)
+
+        resizedDetects.forEach(detects => {
+            const box = detects.detection.box
+            const drawBox = new faceapi.draw.DrawBox(box, { label: Math.round(detects.age) + " year old " + detects.gender })
+            drawBox.draw(canvas)
+        })
+    }, 1000)
 })
 
 // Run
